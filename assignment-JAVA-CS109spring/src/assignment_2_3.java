@@ -34,11 +34,18 @@ public class assignment_2_3 {
                     if (jishu%2==0)
                         available+=jishu/2;
                     else
-                        available+=(available+1)/2;
+                        available+=(jishu+1)/2;
                     jishu = 0;
                 }
                 if (array_big[j][i]==0)
                     jishu+=1;
+                if (j == m-1) {
+                    if (jishu%2==0)
+                        available+=jishu/2;
+                    else
+                        available+=(jishu+1)/2;
+                    jishu = 0;
+                }
             }
             }
         if (available >= balloon_number)
