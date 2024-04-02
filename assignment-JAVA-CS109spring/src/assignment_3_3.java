@@ -37,10 +37,10 @@ public class assignment_3_3 {
                             mark -= (x + 1);
                         }
                         y_starter += x + 1;
-                        if ((x_starter  < 0 || x_starter  >= m || y_starter-x-1 < 0 || y_starter-x-1 >= n) && y_starter <n ) {
+                        if ((x_starter  >= 0 && x_starter  < m && (y_starter-x-1 < 0 || y_starter-x-1 >= n)) && y_starter <n ) {
                             mark += (y_starter + 1);
                         }
-                        if ((x_starter  < 0 || x_starter >= m || y_starter-x-1 < 0 || y_starter-x-1 >= n) && y_starter >=n ){
+                        if ((x_starter  >= 0 && x_starter < m && (y_starter-x-1 < 0 || y_starter-x-1 >= n)) && y_starter >=n ){
                             mark+=n;
                         }
                         if (x_starter >= 0 && x_starter < m && y_starter - x - 1 >= 0 && y_starter - x - 1 < n && y_starter > n - 1) {
@@ -48,7 +48,11 @@ public class assignment_3_3 {
                         }
                         if (mark >= k) {
                             extra = mark - k;
-                            y_starter -= extra;
+                            if(y_starter>=n){
+                                y_starter=n-1-extra;
+                            }else {
+                                y_starter -= extra;
+                            }
                             break;
                         }
                     } else {
@@ -57,10 +61,10 @@ public class assignment_3_3 {
                             mark -= (x + 1);
                         }
                         x_starter += (x + 1);
-                        if ((x_starter -x-1< 0 || x_starter - x - 1 >= m || y_starter < 0 || y_starter >= n) && x_starter <m ) {
+                        if (((x_starter -x-1< 0 || x_starter - x - 1 >= m )&& y_starter >= 0 && y_starter < n) && x_starter <m ) {
                             mark += (x_starter + 1);
                         }
-                        if ((x_starter - x - 1 < 0 || x_starter - x - 1 >= m || y_starter < 0 || y_starter >= n) && x_starter >=m ){
+                        if (((x_starter - x - 1 < 0 || x_starter - x - 1 >= m )&& y_starter >= 0 && y_starter < n) && x_starter >=m ){
                             mark+=m;
                         }
                         if (x_starter - x - 1 >= 0 && x_starter - x - 1 < m && y_starter >= 0 && y_starter < n && x_starter > m - 1) {
@@ -68,7 +72,11 @@ public class assignment_3_3 {
                         }
                         if (mark >= k) {
                             extra = mark - k;
-                            x_starter -= extra;
+                            if(x_starter>=m){
+                                x_starter=m-1-extra;
+                            }else {
+                                x_starter -= extra;
+                            }
                             break;
                         }
                     }
@@ -81,10 +89,10 @@ public class assignment_3_3 {
                             mark -= (x + 1);
                         }
                         y_starter -= (x + 1);
-                        if ((x_starter < 0 || x_starter  >= m || y_starter +x+1< 0 || y_starter+x+1 >= n) && y_starter >= 0 ) {
+                        if ((x_starter >= 0 && x_starter  < m && (y_starter +x+1< 0 || y_starter+x+1 >= n)) && y_starter >= 0 ) {
                             mark += (n - y_starter - 1);
                         }
-                        if ((x_starter < 0 || x_starter >= m || y_starter+x+1 < 0 || y_starter+x+1 >= n) && y_starter < 0 ){
+                        if ((x_starter >= 0 && x_starter < m && (y_starter+x+1 < 0 || y_starter+x+1 >= n)) && y_starter < 0 ){
                             mark+=n;
                         }
                         if (x_starter >= 0 && x_starter < m && y_starter + x + 1 >= 0 && y_starter + x + 1 < n && y_starter < 0) {
@@ -92,7 +100,11 @@ public class assignment_3_3 {
                         }
                         if (mark >= k) {
                             extra = mark - k;
-                            y_starter += extra;
+                            if(y_starter<0){
+                                y_starter=extra;
+                            }else {
+                                y_starter += extra;
+                            }
                             break;
                         }
                     } else {
@@ -101,10 +113,10 @@ public class assignment_3_3 {
                             mark -= (x + 1);
                         }
                         x_starter -= (x + 1);
-                        if ((x_starter + x + 1 < 0 || x_starter + x + 1 >= m || y_starter < 0 || y_starter >= n) && x_starter >= 0 ) {
+                        if (((x_starter + x + 1 < 0 || x_starter + x + 1 >= m )&& y_starter >=0 && y_starter < n) && x_starter >= 0 ) {
                             mark += (m - x_starter - 1);
                         }
-                        if ((x_starter + x + 1 < 0 || x_starter + x + 1 >= m || y_starter < 0 || y_starter >= n) && x_starter < 0 ){
+                        if (((x_starter + x + 1 < 0 || x_starter + x + 1 >= m )&& y_starter >=0 && y_starter < n) && x_starter < 0 ){
                             mark+=m;
                         }
                         if (x_starter + x + 1 >= 0 && x_starter + x + 1 < m && y_starter >= 0 && y_starter < n && x_starter < 0) {
@@ -112,7 +124,11 @@ public class assignment_3_3 {
                         }
                         if (mark >= k) {
                             extra = mark - k;
-                            x_starter += extra;
+                            if (x_starter<0){
+                                x_starter=extra;
+                            }else {
+                                x_starter += extra;
+                            }
                             break;
                         }
                     }
@@ -122,6 +138,5 @@ public class assignment_3_3 {
         }
         int final_point = land_number[x_starter][y_starter];
         System.out.println(final_point);
-
     }
 }
