@@ -90,13 +90,13 @@ public class assignment_3_3 {
                         }
                         y_starter -= (x + 1);
                         if ((x_starter >= 0 && x_starter  < m && (y_starter +x+1< 0 || y_starter+x+1 >= n)) && y_starter >= 0 ) {
-                            mark += (n - y_starter - 1);
+                            mark += (n - y_starter);
                         }
                         if ((x_starter >= 0 && x_starter < m && (y_starter+x+1 < 0 || y_starter+x+1 >= n)) && y_starter < 0 ){
                             mark+=n;
                         }
                         if (x_starter >= 0 && x_starter < m && y_starter + x + 1 >= 0 && y_starter + x + 1 < n && y_starter < 0) {
-                            mark -= y_starter;
+                            mark += y_starter;
                         }
                         if (mark >= k) {
                             extra = mark - k;
@@ -114,13 +114,13 @@ public class assignment_3_3 {
                         }
                         x_starter -= (x + 1);
                         if (((x_starter + x + 1 < 0 || x_starter + x + 1 >= m )&& y_starter >=0 && y_starter < n) && x_starter >= 0 ) {
-                            mark += (m - x_starter - 1);
+                            mark += (m - x_starter );
                         }
                         if (((x_starter + x + 1 < 0 || x_starter + x + 1 >= m )&& y_starter >=0 && y_starter < n) && x_starter < 0 ){
                             mark+=m;
                         }
                         if (x_starter + x + 1 >= 0 && x_starter + x + 1 < m && y_starter >= 0 && y_starter < n && x_starter < 0) {
-                            mark -= x_starter;
+                            mark += x_starter;
                         }
                         if (mark >= k) {
                             extra = mark - k;
