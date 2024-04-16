@@ -57,20 +57,26 @@ public class CourseManager {
         boolean flag5 = false;
         int count = 0;
         int location1 = 0;
+        int location2 = 0;
         for (Course course : courses) {
+            count+=1;
             if (course.getCourseID().equals(courseId)) {
                 flag1 = true;
-                location1=0;
-            }
-            if (course.getEnrollStudent().equals(student)) {
-                flag2 = false;
+                location1 = count;
+                ArrayList<Student> student1 = course.getEnrollStudent();
+                for (int i = 0; i < student1.size(); i++) {
+                    if (student1.get(i).equals(student.getStudentID())) {         //getenrollstudent里面存的是ID还是name？
+                        location2 = i;
+                        flag2 = false;
+                    }
+                }
             }
         }
-        if (student.getCredits() >= (credits) && credits > 0) {
+        if (student.getCredits() >= (credits) && credits > 0 && flag1 && flag2) {
             flag3 = true;
         }
-        if (flag1 && flag2 && flag3 && flag4){
-            student.setCredits(student.getCredits()-credits);       //更新学生的credit
+        if (flag1 && flag2 && flag3 && flag4) {
+            student.setCredits(student.getCredits() - credits);       //更新学生的credit
             student.getEnrollCourses().add(courses.get(location1));
             student.setEnrollCourses(student.getEnrollCourses());                            //更新学生课程
             courses.get(location1).getEnrollStudent().add(student);
@@ -78,7 +84,7 @@ public class CourseManager {
             courses.get(location1).getCredits().add(credits);
             courses.get(location1).setCredits(courses.get(location1).getCredits());                  //更新课程credit
             flag5 = true;
-         }
+        }
         return (flag5);
     }
 
@@ -98,22 +104,32 @@ public class CourseManager {
         boolean flag5 = false;
         int count = 0;
         int location1 = 0;
+        int location2 = 0;
         for (Course course : courses) {
             count += 1;
             if (course.getCourseID().equals(courseId)) {
                 flag1 = true;
                 location1 = count;
-            }
-            if (course.getEnrollStudent().equals(student)) {
-                flag2 = true;
+                ArrayList<Student> student1 = course.getEnrollStudent();
+                for (int i = 0; i < student1.size(); i++) {
+                    if (student1.get(i).equals(student.getStudentID())) {         //getenrollstudent里面存的是ID还是name？
+                        location2 = i;
+                        flag2 = true;
+                    }
+                }
             }
         }
-        int credit1 = courses.get(location1).getCredits()
-        if (student.getCredits()- credits > 0) {
+        int credit1 = courses.get(location1).getEnrollStudent().get(location2).getCredits();      //取出前一次的credit
+        if (student.getCredits() + credit1 - credits > 0 && flag1 && flag2) {
             flag3 = true;
         }
-        if (flag1 && flag2 && flag3 && flag4){
-
+        if (flag1 && flag2 && flag3 && flag4) {
+            student.setCredits(student.getCredits() + credit1 - credits);         //更新学生的credit
+            //无需更新学生课程信息，本身就已经添加
+            //无需更新课程列表，本身就已经添加
+            courses.get(location1).getCredits().remove(location2);               //移除原有credit
+            courses.get(location1).getCredits().add(location2,credits);
+            courses .get(location1).setCredits(courses.get(location1).getCredits());    //在原有位置添加新的credits
         }
         return (flag5);
     }
@@ -126,8 +142,7 @@ public class CourseManager {
      *
      * @return boolean  Returns true if the student successfully drops the course; otherwise, it returns false.
      */
-    public boolean dropStudentEnrollmentCourse(Student student, String courseId){
-
+    public boolean dropStudentEnrollmentCourse(Student student, String courseId) {
     }
 
     /**
@@ -140,11 +155,12 @@ public class CourseManager {
     /**
      * Retrieves a list of courses with associated credits for a given student.
      * Each String in the list includes the course ID and the points bid by the
-     student in enrollCourses, follow the format: "courseID: enrollmentCredits"
-     (without quotes).
+     * student in enrollCourses, follow the format: "courseID: enrollmentCredits"
+     * (without quotes).
      * Only available when ifOpen is true. Return null if ifOpen is false.
+     *
      * @return A list of Strings, each representing the courses and the respective
-    credits the student enrolled.
+     * credits the student enrolled.
      */
     public ArrayList<String> getEnrolledCoursesWithCredits(Student student)
 
