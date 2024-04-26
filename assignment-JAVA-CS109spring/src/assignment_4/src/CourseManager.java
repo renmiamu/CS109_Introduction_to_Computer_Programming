@@ -36,7 +36,7 @@ public class CourseManager {
 // getter for ifOpen
 
     public void addCourse(Course course) {
-        if (course.getMaxCapacity()>0) {
+        if (course.getMaxCapacity() > 0) {
             courses.add(course);
             course.setCourseManager(this);
         }
@@ -44,7 +44,7 @@ public class CourseManager {
 // Register a course. Add a course object to courses and set the courseManager of the course object to this manager. It is guaranteed that all courseIDs are unique.
 
     public void addStudent(Student student) {
-        if (student.getCredits()>0) {
+        if (student.getCredits() > 0) {
             students.add(student);
             student.setCourseManager(this);
         }
@@ -65,25 +65,29 @@ public class CourseManager {
         boolean flag3 = false;
         boolean flag4 = this.getIfOpen();
         boolean flag5 = false;
-        if (!flag4){
+        if (!flag4) {
             return false;
         }
         int count = 0;
         int location1 = 0;
         int location2 = 0;
-        for (Course course : courses) {
-            if (course.getCourseID().equals(courseId)) {
-                flag1 = true;
-                location1 = count;
-                ArrayList<Student> student1 = course.getEnrollStudent();
-                for (int i = 0; i < student1.size(); i++) {
-                    if (student1.get(i).getStudentID().equals(student.getStudentID())) {         //getenrollstudent里面存的是ID还是name？
-                        location2 = i;
-                        flag2 = false;
+        if (courses.isEmpty()) {
+            return false;
+        } else {
+            for (Course course : courses) {
+                if (course.getCourseID().equals(courseId)) {
+                    flag1 = true;
+                    location1 = count;
+                    ArrayList<Student> student1 = course.getEnrollStudent();
+                    for (int i = 0; i < student1.size(); i++) {
+                        if (student1.get(i).getStudentID().equals(student.getStudentID())) {         //getenrollstudent里面存的是ID还是name？
+                            location2 = i;
+                            flag2 = false;
+                        }
                     }
                 }
+                count += 1;
             }
-            count+=1;
         }
         if (student.getCredits() >= (credits) && credits > 0 && flag1 && flag2) {
             flag3 = true;
@@ -117,30 +121,39 @@ public class CourseManager {
         boolean flag3 = false;
         boolean flag4 = this.getIfOpen();
         boolean flag5 = false;
-        if (!flag4){
+        if (!flag4) {
             return false;
         }
         int count = 0;
         int location1 = 0;
         int location2 = 0;
-        for (Course course : courses) {
-            if (course.getCourseID().equals(courseId)) {
-                flag1 = true;
-                location1 = count;
-                ArrayList<Student> student1 = course.getEnrollStudent();
-                for (int i = 0; i < student1.size(); i++) {
-                    if (student1.get(i).getStudentID().equals(student.getStudentID())) {         //getenrollstudent里面存的是ID还是name？
-                        location2 = i;
-                        flag2 = true;
+        if (courses.isEmpty()) {
+            return false;
+        } else {
+            for (Course course : courses) {
+                if (course.getCourseID().equals(courseId)) {
+                    flag1 = true;
+                    location1 = count;
+                    ArrayList<Student> student1 = course.getEnrollStudent();
+                    for (int i = 0; i < student1.size(); i++) {
+                        if (student1.get(i).getStudentID().equals(student.getStudentID())) {         //getenrollstudent里面存的是ID还是name？
+                            location2 = i;
+                            flag2 = true;
+                        }
                     }
                 }
+                count += 1;
             }
-            count+=1;
         }
-        int credit1 = courses.get(location1).getCredits().get(location2);//取出前一次的credit
-        int credittt = student.getCredits();
-        if (student.getCredits() + credit1 - credits >= 0 && flag1 && flag2) {
-            flag3 = true;
+        int credit1 = 0;
+        if (!courses.isEmpty() && flag1 && flag2 && flag4) {
+            credit1 = courses.get(location1).getCredits().get(location2);//取出前一次的credit
+            int credittt = student.getCredits();
+            if (student.getCredits() + credit1 - credits >= 0 && flag1 && flag2) {
+                flag3 = true;
+            }
+        } else {
+            return false;
         }
         if (flag1 && flag2 && flag3 && flag4) {
             int initial = student.getCredits();
@@ -169,35 +182,41 @@ public class CourseManager {
         boolean flag2 = false;
         boolean flag3 = this.getIfOpen();
         boolean flag4 = false;
-        if(!flag3){
+        if (!flag3) {
             return false;
         }
         int count = 0;
         int location1 = 0;
         int location2 = 0;
         int location3 = 0;
-        for (Course course : courses) {
-            if (course.getCourseID().equals(courseId)) {
-                flag1 = true;
-                location1 = count;
-                ArrayList<Student> student1 = course.getEnrollStudent();
-                ArrayList<Course> course1 = student.getEnrollCourses();
-                for (int i = 0; i < student1.size(); i++) {
-                    if (student1.get(i).getStudentID().equals(student.getStudentID())) {         //getenrollstudent里面存的是ID还是name？
-                        location2 = i;
-                        flag2 = true;
+        if (courses.isEmpty()) {
+            return false;
+        } else {
+            for (Course course : courses) {
+                if (course.getCourseID().equals(courseId)) {
+                    flag1 = true;
+                    location1 = count;
+                    ArrayList<Student> student1 = course.getEnrollStudent();
+                    ArrayList<Course> course1 = student.getEnrollCourses();
+                    for (int i = 0; i < student1.size(); i++) {
+                        if (student1.get(i).getStudentID().equals(student.getStudentID())) {         //getenrollstudent里面存的是ID还是name？
+                            location2 = i;
+                            flag2 = true;
+                        }
+                    }
+                    for (int i = 0; i < course1.size(); i++) {
+                        if (course1.get(i).getCourseID().equals(courseId)) {
+                            location3 = i;                           //检测该课程在学生已选课程中的位置
+                        }
                     }
                 }
-                for (int i = 0; i < course1.size(); i++) {
-                    if (course1.get(i).getCourseID().equals(courseId)) {
-                        location3 = i;                           //检测该课程在学生已选课程中的位置
-                    }
-                }
+                count += 1;
             }
-            count+=1;
         }
-        int credit1 = courses.get(location1).getCredits().get(location2);      //取出前一次的credit
+        int credit1 = 0;
+
         if (flag1 && flag2 && flag3) {
+            credit1 = courses.get(location1).getCredits().get(location2);
             int initial = student.getCredits();
             student.setCredits(student.getCredits() + credit1);             //返还积分
             int final_credit = student.getCredits();
@@ -223,10 +242,13 @@ public class CourseManager {
             int maxCapacity = courses.get(i).getMaxCapacity();
             ArrayList<Integer> credit_list = courses.get(i).getCredits();
             ArrayList<Student> student_list = courses.get(i).getEnrollStudent();
+            if (credit_list.isEmpty() || student_list.isEmpty()) {
+                continue;
+            }
             int enroll_number = credit_list.size();
             //冒泡排序从大到小
             for (int j = 0; j < enroll_number; j++) {
-                for (int k = 0; k < enroll_number - j-1; k++) {
+                for (int k = 0; k < enroll_number - j - 1; k++) {
                     if (credit_list.get(k) < credit_list.get(k + 1)) {
                         int temp = credit_list.get(k);
                         credit_list.set(k, credit_list.get(k + 1));
@@ -239,7 +261,8 @@ public class CourseManager {
             }
             int count = 0;
             int result = 0;
-            for (int j = 0; j < enroll_number; j++) {
+            int j = 0;
+            while (j < enroll_number) {
                 int number1 = credit_list.get(j);
                 int same_number = 0;
                 for (int k = j + 1; k < enroll_number; k++) {
@@ -247,15 +270,20 @@ public class CourseManager {
                         same_number += 1;
                     }
                 }
+                j+=same_number;
                 if (count + 1 + same_number > maxCapacity) {
                     result = count;
                     break;
-                } else if (count + 1 +same_number == maxCapacity) {
-                    result = count +1 +same_number;
+                } else if (count + 1 + same_number == maxCapacity) {
+                    result = count + 1 + same_number;
                     break;
                 } else {
                     count = count + 1 + same_number;
+                    j+=1;
                 }
+            }
+            if (result == 0 && count < maxCapacity) {
+                result = count;
             }
             ArrayList<Student> successstudent_list = new ArrayList<>();
             int q = 0;
@@ -282,30 +310,23 @@ public class CourseManager {
      * credits the student enrolled.
      */
     public ArrayList<String> getEnrolledCoursesWithCredits(Student student) {
-        ArrayList<Course> success_class_list = student.getEnrollCourses();
         ArrayList<String> information = new ArrayList<>();
-        if (!this.ifOpen){
+        if (!this.ifOpen) {
             return null;
         }
-        for (int i = 0; i < success_class_list.size(); i++) {
-            String course_id = success_class_list.get(i).getCourseID();
-            StringBuilder bid_credit_string = new StringBuilder();
-            for (int j = 0; j < courses.size(); j++) {
-                if(courses.get(j).getCourseID().equals(course_id)){
-                    ArrayList<Student> success_student_list = courses.get(j).getEnrollStudent();
-                    for (int k = 0; k < success_student_list.size(); k++) {
-                        if (success_student_list.get(k).getStudentID().equals(student.getStudentID())){
-                            int bid_credit = courses.get(j).getCredits().get(k);
-                            String bid_credit_string1 = Integer.toString(bid_credit);
-                            bid_credit_string.append(bid_credit_string1);
-                            break;
-                        }
-                    }
-                    break;
-                }
+        for (Course course : courses) {
+            ArrayList<Student> enrolledStudents = course.getEnrollStudent();
+            // 检查学生是否在课程的学生列表中
+            if (enrolledStudents.contains(student)) {
+                String courseId = course.getCourseID();
+                ArrayList<Integer> credits = course.getCredits();
+                // 获取学生在课程中的积分
+                int studentIndex = enrolledStudents.indexOf(student);
+                int studentCredits = credits.get(studentIndex);
+                // 格式化输出
+                String context = courseId + ": " + studentCredits;
+                information.add(context);
             }
-            String context = course_id + ": "+ bid_credit_string;
-            information.add(context);
         }
         return information;
     }
